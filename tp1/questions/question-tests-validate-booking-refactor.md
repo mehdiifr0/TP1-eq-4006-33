@@ -8,11 +8,11 @@ Pour chaque test de `Booking.validate`, énumérez 3 points ne respectant pas le
 - 3 Le test passe par NewBookingDto et toute la chaîne de mapping. Change la forme du DTO et ce test casse, pour une raison qui a rien à voir avec la règle "pas de voyageur".
 
 `givenDeparture5minutesBeforeBookingDateTime_whenValidate_thenThrowInvalidBookingDateException`:
-- 1 Les deux LocalDateTime.now() sont appelés à des instants différents. L'écart de 5 minutes peut varier de quelques millisecondes selon la vitesse d'exécution de la machine, ce qui rend le test flaky. Une Clock fixe ou des dates codées en dur réglerait ça.
-- 2 Le try/catch attrape seulement InvalidBookingDateException. Si validate() se met à lancer autre chose, l'exception remonte sans message clair au lieu d'un échec propre avec assertThrows qui dit exactement ce qui était attendu.
-- 3 ANY_BOOKING_ID et ANY_DEPARTURE_DATE_TIME sont déjà définis en haut de la classe, mais ce test recrée ses propres valeurs ("id-123", 2012-03-03). Le jour où les constantes changent, ce test continue de rouler sur ses vieilles valeurs sans que personne s'en rende compte.
+- 1 Les dates sortent de LocalDateTime.now(), donc elles changent à chaque exécution. Un échec vu une fois ne peut pas être rejoué avec les mêmes valeurs. Des dates fixes règlent ça, il y en a déjà en constantes en haut de la classe.
+- 2 Un try/catch avec un booléen fait le travail de assertThrows. Si validate() ne lance rien, le message d'échec dit juste qu'on attendait true, sans nommer l'exception manquante.
+- 3 Les variables s'appellent t1, t, cdt, b et dep. Il faut relire le constructeur de Booking pour comprendre laquelle des deux dates est celle de la réservation et laquelle est le départ.
 
 `whenValidate_thenDoNotThrow`:
-- 1 La boucle teste deux Booking qui partagent exactement la même liste de travelers. Ça double le nombre d'assertions sans ajouter un seul cas réel, c'est le même scénario exécuté deux fois.
+- 1 La boucle passe deux Booking identiques à part leur id, et l'id ne joue aucun rôle dans validate(). C'est le même scénario exécuté deux fois, et si un des deux échoue le rapport ne dit pas lequel.
 - 2 Les deux Booking reçoivent la même instance d'ArrayList en paramètre. Si un comportement futur modifie cette liste sur un Booking, l'autre Booking du test hérite du changement sans que ce soit voulu.
 - 3 assertFalse(bookingTest.getTravelers().isEmpty()) teste un getter, pas validate(). Si cette ligne échoue un jour, ça va avoir l'air que validate() est cassé alors que le vrai problème sera ailleurs.
