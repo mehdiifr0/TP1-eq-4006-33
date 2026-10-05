@@ -52,7 +52,7 @@ public class BookingResource {
     }
 
     @POST
-    @Path("/{BookingId}/travelers/{travelerId}/zeroGravityExperiences")
+    @Path("/{bookingId}/travelers/{travelerId}/zeroGravityExperiences")
     public Response bookZeroGravityExperience(@PathParam("cruiseId") String cruiseId,
                                               @PathParam("bookingId") String bookingId,
                                               @PathParam("travelerId") String travelerId,
