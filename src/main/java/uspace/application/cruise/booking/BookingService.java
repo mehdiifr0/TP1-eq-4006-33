@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 import uspace.application.cruise.booking.dtos.BookingDto;
 import uspace.application.cruise.booking.dtos.BookingIdDto;
 import uspace.application.cruise.booking.dtos.newBooking.NewBookingDto;
+import uspace.application.cruise.booking.dtos.newZeroGravityExperienceBooking.NewZeroGravityExperienceBookingDto;
 import uspace.application.utils.dateTimeParser.LocalDateTimeParser;
 import uspace.domain.cruise.CruiseId;
 import uspace.domain.cruise.booking.Booking;
@@ -13,6 +14,8 @@ import uspace.domain.cruise.CruiseRepository;
 import uspace.domain.cruise.booking.BookingId;
 import uspace.domain.cruise.booking.exceptions.BookingNotFoundException;
 import uspace.domain.cruise.booking.newBooking.NewBooking;
+import uspace.domain.cruise.booking.traveler.TravelerId;
+import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.exceptions.CruiseNotFoundException;
 
 import java.time.LocalDateTime;
@@ -57,6 +60,17 @@ public class BookingService {
         }
 
         return bookingAssembler.toDto(cruiseId, booking);
+    }
+
+    public void bookZeroGravityExperience(String cruiseId, String bookingId, String travelerId,
+                                          NewZeroGravityExperienceBookingDto newZeroGravityExperienceBookingDto) {
+        Cruise cruise = findCruiseById(cruiseId);
+
+        LocalDateTime experienceBookingDateTime = localDateTimeParser.parse(newZeroGravityExperienceBookingDto.experienceBookingDateTime);
+        cruise.bookZeroGravityExperience(new BookingId(bookingId),
+                                         new TravelerId(travelerId),
+                                         new CruiseDateTime(experienceBookingDateTime));
+        cruiseRepository.save(cruise);
     }
 
     private Cruise findCruiseById(String cruiseId) {
