@@ -8,6 +8,9 @@ import uspace.domain.cruise.booking.traveler.exceptions.TravelerNotFoundExceptio
 import uspace.domain.cruise.cabin.CabinAvailabilities;
 import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.hyperdrive.HyperdriveInventory;
+import uspace.domain.cruise.hyperdrive.exceptions.HyperdriveModuleAlreadyExistsException;
+import uspace.domain.cruise.hyperdrive.exceptions.HyperdriveModuleConflictException;
+import uspace.domain.cruise.hyperdrive.exceptions.InvalidHyperdriveActivationDateException;
 import uspace.domain.cruise.hyperdrive.module.HyperdriveModule;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 import uspace.domain.cruise.zeroGravityExperience.exceptions.ZeroGravityExperienceBookingTimeException;
@@ -48,6 +51,22 @@ public class Cruise {
 
     public List<HyperdriveModule> getHyperdriveModules() {
         return hyperdriveInventory.getAllHyperdriveModules();
+    }
+
+    public void addHyperdriveModule(HyperdriveModule hyperdriveModule) {
+        if (hyperdriveInventory.contains(hyperdriveModule.getId())) {
+            throw new HyperdriveModuleAlreadyExistsException();
+        }
+
+        if (!hyperdriveModule.isActiveBetween(departureDateTime, endDateTime)) {
+            throw new InvalidHyperdriveActivationDateException();
+        }
+
+        if (hyperdriveInventory.hasModuleActiveAtSameTimeAs(hyperdriveModule)) {
+            throw new HyperdriveModuleConflictException();
+        }
+
+        hyperdriveInventory.add(hyperdriveModule);
     }
 
     public void processBooking(Booking booking) {

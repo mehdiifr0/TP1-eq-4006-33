@@ -1,10 +1,16 @@
 package uspace.domain.cruise.hyperdrive.module;
 
+import uspace.domain.cruise.hyperdrive.exceptions.InvalidHyperdriveModuleIdFormatException;
+
 public class HyperdriveModuleId {
+    private static final String ID_FORMAT = "HY-[1-9][0-9]{0,2}-[A-Z]";
 
     private final String id;
 
     public HyperdriveModuleId(String id) {
+        if (id == null || !id.matches(ID_FORMAT)) {
+            throw new InvalidHyperdriveModuleIdFormatException();
+        }
         this.id = id;
     }
 

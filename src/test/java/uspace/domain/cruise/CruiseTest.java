@@ -13,7 +13,11 @@ import uspace.domain.cruise.booking.traveler.exceptions.TravelerNotFoundExceptio
 import uspace.domain.cruise.cabin.CabinAvailabilities;
 import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.hyperdrive.HyperdriveInventory;
+import uspace.domain.cruise.hyperdrive.exceptions.HyperdriveModuleAlreadyExistsException;
+import uspace.domain.cruise.hyperdrive.exceptions.HyperdriveModuleConflictException;
+import uspace.domain.cruise.hyperdrive.exceptions.InvalidHyperdriveActivationDateException;
 import uspace.domain.cruise.hyperdrive.module.HyperdriveModule;
+import uspace.domain.cruise.hyperdrive.module.HyperdriveModuleId;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 import uspace.domain.cruise.zeroGravityExperience.exceptions.ZeroGravityExperienceBookingTimeException;
 
@@ -22,6 +26,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
@@ -34,6 +39,7 @@ class CruiseTest {
     private static final CruiseDateTime DATE_TIME_AFTER_DEPARTURE = new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 12, 1));
     private static final BookingId BOOKING_ID = new BookingId("booking-id");
     private static final TravelerId TRAVELER_ID = new TravelerId("traveler-id");
+    private static final HyperdriveModuleId HYPERDRIVE_MODULE_ID = new HyperdriveModuleId("HY-77-V");
     @Mock
     private HyperdriveInventory hyperdriveInventoryMock;
     @Mock
@@ -108,5 +114,57 @@ class CruiseTest {
         cruise.bookZeroGravityExperience(BOOKING_ID, TRAVELER_ID, DEPARTURE_DATE_TIME);
 
         verify(bookingMock).bookZeroGravityExperience(TRAVELER_ID, zeroGravityExperienceMock);
+    }
+
+    @Test
+    void givenModuleAlreadyInInventory_whenAddHyperdriveModule_thenThrowHyperdriveModuleAlreadyExistsException() {
+        when(hyperdriveModuleMock.getId()).thenReturn(HYPERDRIVE_MODULE_ID);
+        when(hyperdriveInventoryMock.contains(HYPERDRIVE_MODULE_ID)).thenReturn(true);
+
+        assertThrows(HyperdriveModuleAlreadyExistsException.class, () -> cruise.addHyperdriveModule(hyperdriveModuleMock));
+    }
+
+    @Test
+    void givenModuleNotActiveDuringCruise_whenAddHyperdriveModule_thenThrowInvalidHyperdriveActivationDateException() {
+        givenNewModule();
+        when(hyperdriveModuleMock.isActiveBetween(DEPARTURE_DATE_TIME, END_DATE_TIME)).thenReturn(false);
+
+        assertThrows(InvalidHyperdriveActivationDateException.class, () -> cruise.addHyperdriveModule(hyperdriveModuleMock));
+    }
+
+    @Test
+    void givenAnotherModuleActiveAtSameTime_whenAddHyperdriveModule_thenThrowHyperdriveModuleConflictException() {
+        givenNewModule();
+        when(hyperdriveModuleMock.isActiveBetween(DEPARTURE_DATE_TIME, END_DATE_TIME)).thenReturn(true);
+        when(hyperdriveInventoryMock.hasModuleActiveAtSameTimeAs(hyperdriveModuleMock)).thenReturn(true);
+
+        assertThrows(HyperdriveModuleConflictException.class, () -> cruise.addHyperdriveModule(hyperdriveModuleMock));
+    }
+
+    @Test
+    void givenAnotherModuleActiveAtSameTime_whenAddHyperdriveModule_thenModuleIsNotAddedToInventory() {
+        givenNewModule();
+        when(hyperdriveModuleMock.isActiveBetween(DEPARTURE_DATE_TIME, END_DATE_TIME)).thenReturn(true);
+        when(hyperdriveInventoryMock.hasModuleActiveAtSameTimeAs(hyperdriveModuleMock)).thenReturn(true);
+
+        assertThrows(HyperdriveModuleConflictException.class, () -> cruise.addHyperdriveModule(hyperdriveModuleMock));
+
+        verify(hyperdriveInventoryMock, never()).add(hyperdriveModuleMock);
+    }
+
+    @Test
+    void givenNewModuleActiveDuringCruiseWithoutConflict_whenAddHyperdriveModule_thenModuleIsAddedToInventory() {
+        givenNewModule();
+        when(hyperdriveModuleMock.isActiveBetween(DEPARTURE_DATE_TIME, END_DATE_TIME)).thenReturn(true);
+        when(hyperdriveInventoryMock.hasModuleActiveAtSameTimeAs(hyperdriveModuleMock)).thenReturn(false);
+
+        cruise.addHyperdriveModule(hyperdriveModuleMock);
+
+        verify(hyperdriveInventoryMock).add(hyperdriveModuleMock);
+    }
+
+    private void givenNewModule() {
+        when(hyperdriveModuleMock.getId()).thenReturn(HYPERDRIVE_MODULE_ID);
+        when(hyperdriveInventoryMock.contains(HYPERDRIVE_MODULE_ID)).thenReturn(false);
     }
 }

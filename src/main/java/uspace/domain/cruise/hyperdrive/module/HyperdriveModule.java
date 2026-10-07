@@ -31,4 +31,13 @@ public class HyperdriveModule {
     public CruiseDateTime getDeactivationDateTime() {
         return deactivationDateTime;
     }
+
+    public boolean isActiveBetween(CruiseDateTime startDateTime, CruiseDateTime endDateTime) {
+        return activationDateTime.isAfter(startDateTime) && deactivationDateTime.isBefore(endDateTime);
+    }
+
+    public boolean isActiveAtSameTimeAs(HyperdriveModule otherModule) {
+        return activationDateTime.isBefore(otherModule.deactivationDateTime)
+               && otherModule.activationDateTime.isBefore(deactivationDateTime);
+    }
 }
