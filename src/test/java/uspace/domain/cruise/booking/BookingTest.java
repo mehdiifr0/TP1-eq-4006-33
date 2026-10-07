@@ -25,14 +25,23 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class BookingTest {
     private static final BookingId ANY_BOOKING_ID = new BookingId("id-123");
+
     private static final TravelerId TRAVELER_ID = new TravelerId("trav-1");
+
     private static final TravelerId UNKNOWN_TRAVELER_ID = new TravelerId("trav-2");
-    private static final CruiseDateTime CRUISE_DEPARTURE_DATE_TIME = new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 12, 0));
-    private static final CruiseDateTime DATE_TIME_BEFORE_DEPARTURE = new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 11, 55));
-    private static final CruiseDateTime DATE_TIME_AFTER_DEPARTURE = new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 12, 5));
+
+    private static final CruiseDateTime CRUISE_DEPARTURE_DATE_TIME =
+            new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 12, 0));
+
+    private static final CruiseDateTime DATE_TIME_BEFORE_DEPARTURE =
+            new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 11, 55));
+
+    private static final CruiseDateTime DATE_TIME_AFTER_DEPARTURE =
+            new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 12, 5));
 
     @Mock
     private Traveler travelerMock;
+
     @Mock
     private ZeroGravityExperience zeroGravityExperienceMock;
 

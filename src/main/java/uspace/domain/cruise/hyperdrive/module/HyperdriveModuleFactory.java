@@ -9,7 +9,8 @@ import java.time.LocalTime;
 public class HyperdriveModuleFactory {
     private static final LocalTime ACTIVATION_TIME = LocalTime.of(1, 0);
 
-    public HyperdriveModule create(HyperdriveModuleId id, int powerLevel, int activationDays, LocalDate activationDate) {
+    public HyperdriveModule create(HyperdriveModuleId id, int powerLevel, int activationDays,
+                                   LocalDate activationDate) {
         LocalDateTime activationDateTime = activationDate.atTime(ACTIVATION_TIME);
         LocalDateTime deactivationDateTime = activationDateTime.plusDays(activationDays);
 

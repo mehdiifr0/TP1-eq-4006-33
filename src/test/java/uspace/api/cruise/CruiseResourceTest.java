@@ -19,10 +19,12 @@ class CruiseResourceTest {
 
     @Mock
     private CruiseService cruiseServiceMock;
+
     @Mock
     private NewHyperdriveModuleDtoValidator newHyperdriveModuleDtoValidatorMock;
 
     private CruiseResource cruiseResource;
+
     private NewHyperdriveModuleDto newHyperdriveModuleDto;
 
     @BeforeEach

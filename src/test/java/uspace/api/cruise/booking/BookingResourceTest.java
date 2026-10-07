@@ -19,15 +19,20 @@ import static org.mockito.Mockito.verifyNoInteractions;
 @ExtendWith(MockitoExtension.class)
 class BookingResourceTest {
     private static final String CRUISE_ID = "JUPITER_MOONS_EXPLORATION_2085";
+
     private static final String BOOKING_ID = "booking-id";
+
     private static final String TRAVELER_ID = "traveler-id";
+
     private static final NewZeroGravityExperienceBookingDto NEW_ZERO_GRAVITY_EXPERIENCE_BOOKING_DTO =
             new NewZeroGravityExperienceBookingDto("2084-04-08T12:30:00");
 
     @Mock
     private BookingService bookingServiceMock;
+
     @Mock
     private NewBookingDtoValidator newBookingDtoValidatorMock;
+
     @Mock
     private NewZeroGravityExperienceBookingDtoValidator newZeroGravityExperienceBookingDtoValidatorMock;
 
@@ -64,7 +69,8 @@ class BookingResourceTest {
     @Test
     void givenInvalidRequest_whenBookZeroGravityExperience_thenServiceIsNotCalled() {
         doThrow(new MissingParameterException("experienceBookingDateTime"))
-                .when(newZeroGravityExperienceBookingDtoValidatorMock).validate(NEW_ZERO_GRAVITY_EXPERIENCE_BOOKING_DTO);
+                .when(newZeroGravityExperienceBookingDtoValidatorMock)
+                .validate(NEW_ZERO_GRAVITY_EXPERIENCE_BOOKING_DTO);
 
         assertThrows(MissingParameterException.class, this::bookZeroGravityExperience);
 

@@ -7,7 +7,9 @@ import java.util.List;
 
 public abstract class Traveler {
     private final TravelerId id;
+
     private final TravelerName name;
+
     private final List<Badge> badges;
 
     public Traveler(TravelerId id, TravelerName name, List<Badge> badges) {
@@ -32,7 +34,8 @@ public abstract class Traveler {
 
     public abstract boolean canAccompanyChild();
 
-    public abstract void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience, List<Traveler> bookingTravelers);
+    public abstract void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience,
+                                                   List<Traveler> bookingTravelers);
 
     public boolean hasBooked(ZeroGravityExperience zeroGravityExperience) {
         return zeroGravityExperience.hasTravelerBooked(id);

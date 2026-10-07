@@ -11,10 +11,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ZeroGravityExperienceTest {
     private static final int ANY_CAPACITY = 10;
+
     private static final int NO_CAPACITY = 0;
+
     private static final int CAPACITY_OF_ONE = 1;
+
     private static final int CAPACITY_OF_TWO = 2;
+
     private static final TravelerId TRAVELER_ID = new TravelerId("traveler-id");
+
     private static final TravelerId OTHER_TRAVELER_ID = new TravelerId("other-traveler-id");
 
     @Test

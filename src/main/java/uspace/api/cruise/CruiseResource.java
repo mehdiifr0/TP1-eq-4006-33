@@ -15,10 +15,12 @@ import uspace.application.cruise.hyperdrive.dtos.newHyperdriveModule.NewHyperdri
 public class CruiseResource {
 
     private final CruiseService cruiseService;
+
     private final NewHyperdriveModuleDtoValidator newHyperdriveModuleDtoValidator;
 
     @Inject
-    public CruiseResource(CruiseService cruiseService, NewHyperdriveModuleDtoValidator newHyperdriveModuleDtoValidator) {
+    public CruiseResource(CruiseService cruiseService,
+                          NewHyperdriveModuleDtoValidator newHyperdriveModuleDtoValidator) {
         this.cruiseService = cruiseService;
         this.newHyperdriveModuleDtoValidator = newHyperdriveModuleDtoValidator;
     }
@@ -32,7 +34,8 @@ public class CruiseResource {
 
     @POST
     @Path("{cruiseId}/hyperdrive-modules")
-    public Response addHyperdriveModule(@PathParam("cruiseId") String cruiseId, NewHyperdriveModuleDto newHyperdriveModuleDto) {
+    public Response addHyperdriveModule(@PathParam("cruiseId") String cruiseId,
+                                        NewHyperdriveModuleDto newHyperdriveModuleDto) {
         newHyperdriveModuleDtoValidator.validate(newHyperdriveModuleDto);
 
         cruiseService.addHyperdriveModule(cruiseId, newHyperdriveModuleDto);

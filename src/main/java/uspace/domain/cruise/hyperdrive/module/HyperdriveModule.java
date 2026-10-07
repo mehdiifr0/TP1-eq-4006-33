@@ -4,8 +4,11 @@ import uspace.domain.cruise.dateTime.CruiseDateTime;
 
 public class HyperdriveModule {
     private final HyperdriveModuleId id;
+
     private final HyperdrivePowerLevel powerLevel;
+
     private final CruiseDateTime activationDateTime;
+
     private final CruiseDateTime deactivationDateTime;
 
     public HyperdriveModule(HyperdriveModuleId id, HyperdrivePowerLevel powerLevel, CruiseDateTime activationDateTime,

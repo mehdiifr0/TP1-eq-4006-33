@@ -8,7 +8,8 @@ import uspace.domain.cruise.hyperdrive.exceptions.InvalidHyperdriveModuleIdForma
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InvalidHyperdriveModuleIdFormatExceptionMapperTest {
-    private final InvalidHyperdriveModuleIdFormatExceptionMapper mapper = new InvalidHyperdriveModuleIdFormatExceptionMapper();
+    private final InvalidHyperdriveModuleIdFormatExceptionMapper mapper =
+            new InvalidHyperdriveModuleIdFormatExceptionMapper();
 
     @Test
     void whenToResponse_thenReturnBadRequest() {

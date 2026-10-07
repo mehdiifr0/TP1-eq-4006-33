@@ -23,7 +23,8 @@ public class ChildTraveler extends Traveler {
     }
 
     @Override
-    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience, List<Traveler> bookingTravelers) {
+    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience,
+                                          List<Traveler> bookingTravelers) {
         if (!isAccompanied(zeroGravityExperience, bookingTravelers)) {
             throw new ZeroGravityExperienceChildCriteriaException();
         }

@@ -22,7 +22,8 @@ public class AdultTraveler extends Traveler {
     }
 
     @Override
-    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience, List<Traveler> bookingTravelers) {
+    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience,
+                                          List<Traveler> bookingTravelers) {
         zeroGravityExperience.book(getId());
         earnBadge(Badge.ZERO_G);
     }

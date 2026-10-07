@@ -23,13 +23,16 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AdultTravelerTest {
     private static final TravelerId TRAVELER_ID = new TravelerId("trav-1");
+
     private static final TravelerName ANY_NAME = new TravelerName("Bob");
+
     private static final List<Traveler> NO_OTHER_TRAVELER = new ArrayList<>();
 
     @Mock
     private ZeroGravityExperience zeroGravityExperienceMock;
 
     private List<Badge> badges;
+
     private AdultTraveler adultTraveler;
 
     @BeforeEach

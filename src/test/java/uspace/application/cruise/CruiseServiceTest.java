@@ -29,42 +29,56 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CruiseServiceTest {
     private static final String CRUISE_ID = "JUPITER_MOONS_EXPLORATION_2085";
+
     private static final String MODULE_ID = "HY-77-V";
+
     private static final int POWER_LEVEL = 85;
+
     private static final int ACTIVATION_DAYS = 2;
+
     private static final String ACTIVATION_DATE_STR = "2085-01-26";
+
     private static final LocalDate ACTIVATION_DATE = LocalDate.of(2085, 1, 26);
 
     @Mock
     private CruiseRepository cruiseRepositoryMock;
+
     @Mock
     private CruiseAssembler cruiseAssemblerMock;
+
     @Mock
     private HyperdriveModuleFactory hyperdriveModuleFactoryMock;
+
     @Mock
     private HyperdriveStabilityValidator hyperdriveStabilityValidatorMock;
+
     @Mock
     private LocalDateParser localDateParserMock;
+
     @Mock
     private Cruise cruiseMock;
+
     @Mock
     private HyperdriveModule hyperdriveModuleMock;
 
     private CruiseService cruiseService;
+
     private NewHyperdriveModuleDto newHyperdriveModuleDto;
 
     @BeforeEach
     void createCruiseService() {
         cruiseService = new CruiseService(cruiseRepositoryMock, cruiseAssemblerMock, hyperdriveModuleFactoryMock,
                                           hyperdriveStabilityValidatorMock, localDateParserMock);
-        newHyperdriveModuleDto = new NewHyperdriveModuleDto(MODULE_ID, POWER_LEVEL, ACTIVATION_DAYS, ACTIVATION_DATE_STR);
+        newHyperdriveModuleDto = new NewHyperdriveModuleDto(MODULE_ID, POWER_LEVEL, ACTIVATION_DAYS,
+                                                            ACTIVATION_DATE_STR);
     }
 
     @Test
     void givenUnknownCruise_whenAddHyperdriveModule_thenThrowCruiseNotFoundException() {
         when(cruiseRepositoryMock.findById(new CruiseId(CRUISE_ID))).thenReturn(null);
 
-        assertThrows(CruiseNotFoundException.class, () -> cruiseService.addHyperdriveModule(CRUISE_ID, newHyperdriveModuleDto));
+        assertThrows(CruiseNotFoundException.class,
+                     () -> cruiseService.addHyperdriveModule(CRUISE_ID, newHyperdriveModuleDto));
     }
 
     @Test

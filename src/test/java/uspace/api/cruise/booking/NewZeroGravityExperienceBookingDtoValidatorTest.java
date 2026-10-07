@@ -10,9 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class NewZeroGravityExperienceBookingDtoValidatorTest {
     private static final String ANY_DATE_TIME = "2084-04-08T12:30:00";
+
     private static final String MISSING_DATE_TIME_MESSAGE = "Missing parameter: experienceBookingDateTime";
 
-    private final NewZeroGravityExperienceBookingDtoValidator validator = new NewZeroGravityExperienceBookingDtoValidator();
+    private final NewZeroGravityExperienceBookingDtoValidator validator =
+            new NewZeroGravityExperienceBookingDtoValidator();
 
     @Test
     void givenMissingExperienceBookingDateTime_whenValidate_thenThrowMissingParameterException() {
@@ -25,7 +27,8 @@ class NewZeroGravityExperienceBookingDtoValidatorTest {
     void givenMissingExperienceBookingDateTime_whenValidate_thenExceptionNamesMissingParameter() {
         NewZeroGravityExperienceBookingDto dto = new NewZeroGravityExperienceBookingDto(null);
 
-        MissingParameterException exception = assertThrows(MissingParameterException.class, () -> validator.validate(dto));
+        MissingParameterException exception = assertThrows(MissingParameterException.class,
+                                                           () -> validator.validate(dto));
 
         assertEquals(MISSING_DATE_TIME_MESSAGE, exception.getMessage());
     }

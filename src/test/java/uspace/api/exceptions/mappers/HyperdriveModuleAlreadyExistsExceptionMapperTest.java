@@ -8,7 +8,8 @@ import uspace.domain.cruise.hyperdrive.exceptions.HyperdriveModuleAlreadyExistsE
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HyperdriveModuleAlreadyExistsExceptionMapperTest {
-    private final HyperdriveModuleAlreadyExistsExceptionMapper mapper = new HyperdriveModuleAlreadyExistsExceptionMapper();
+    private final HyperdriveModuleAlreadyExistsExceptionMapper mapper =
+            new HyperdriveModuleAlreadyExistsExceptionMapper();
 
     @Test
     void whenToResponse_thenReturnBadRequest() {

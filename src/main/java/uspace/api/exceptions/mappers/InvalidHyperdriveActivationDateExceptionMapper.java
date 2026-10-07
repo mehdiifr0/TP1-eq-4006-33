@@ -7,7 +7,8 @@ import uspace.api.exceptions.ErrorResponse;
 import uspace.domain.cruise.hyperdrive.exceptions.InvalidHyperdriveActivationDateException;
 
 @Provider
-public class InvalidHyperdriveActivationDateExceptionMapper implements ExceptionMapper<InvalidHyperdriveActivationDateException> {
+public class InvalidHyperdriveActivationDateExceptionMapper
+        implements ExceptionMapper<InvalidHyperdriveActivationDateException> {
 
     @Override
     public Response toResponse(InvalidHyperdriveActivationDateException exception) {

@@ -22,15 +22,19 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ChildTravelerTest {
     private static final TravelerId TRAVELER_ID = new TravelerId("trav-1");
+
     private static final TravelerName ANY_NAME = new TravelerName("Bob");
 
     @Mock
     private ZeroGravityExperience zeroGravityExperienceMock;
+
     @Mock
     private Traveler otherTravelerMock;
 
     private List<Badge> badges;
+
     private List<Traveler> bookingTravelers;
+
     private ChildTraveler childTraveler;
 
     @BeforeEach
@@ -61,7 +65,7 @@ class ChildTravelerTest {
     }
 
     @Test
-    void givenOtherTravelerWhoCannotAccompanyChild_whenBookZeroGravityExperience_thenThrowZeroGravityExperienceChildCriteriaException() {
+    void givenOtherChildInBooking_whenBookZeroGravityExperience_thenThrowZeroGravityExperienceChildCriteriaException() {
         when(otherTravelerMock.canAccompanyChild()).thenReturn(false);
 
         assertThrows(ZeroGravityExperienceChildCriteriaException.class,
@@ -69,7 +73,7 @@ class ChildTravelerTest {
     }
 
     @Test
-    void givenAccompanyingTravelerWhoHasNotBooked_whenBookZeroGravityExperience_thenThrowZeroGravityExperienceChildCriteriaException() {
+    void givenCompanionNotBooked_whenBookZeroGravityExperience_thenThrowZeroGravityExperienceChildCriteriaException() {
         when(otherTravelerMock.canAccompanyChild()).thenReturn(true);
         when(otherTravelerMock.hasBooked(zeroGravityExperienceMock)).thenReturn(false);
 
@@ -78,7 +82,7 @@ class ChildTravelerTest {
     }
 
     @Test
-    void givenAccompanyingTravelerWhoHasNotBooked_whenBookZeroGravityExperience_thenExperienceIsNotBooked() {
+    void givenCompanionNotBooked_whenBookZeroGravityExperience_thenExperienceIsNotBooked() {
         when(otherTravelerMock.canAccompanyChild()).thenReturn(true);
         when(otherTravelerMock.hasBooked(zeroGravityExperienceMock)).thenReturn(false);
 

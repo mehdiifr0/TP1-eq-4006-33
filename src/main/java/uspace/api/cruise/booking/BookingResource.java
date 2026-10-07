@@ -20,7 +20,9 @@ import java.net.URI;
 public class BookingResource {
 
     private final BookingService bookingService;
+
     private final NewBookingDtoValidator newBookingDtoValidator;
+
     private final NewZeroGravityExperienceBookingDtoValidator newZeroGravityExperienceBookingDtoValidator;
 
     @Inject

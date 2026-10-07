@@ -10,10 +10,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HyperdriveModuleTest {
     private static final HyperdrivePowerLevel ANY_POWER_LEVEL = new HyperdrivePowerLevel(85);
+
     private static final CruiseDateTime JANUARY_26 = dateTime(26);
+
     private static final CruiseDateTime JANUARY_27 = dateTime(27);
+
     private static final CruiseDateTime JANUARY_28 = dateTime(28);
+
     private static final CruiseDateTime JANUARY_29 = dateTime(29);
+
     private static final CruiseDateTime JANUARY_30 = dateTime(30);
 
     @Test
@@ -95,7 +100,9 @@ class HyperdriveModuleTest {
         return new CruiseDateTime(LocalDateTime.of(2085, 1, dayOfJanuary, 1, 0));
     }
 
-    private HyperdriveModule createModule(String id, CruiseDateTime activationDateTime, CruiseDateTime deactivationDateTime) {
-        return new HyperdriveModule(new HyperdriveModuleId(id), ANY_POWER_LEVEL, activationDateTime, deactivationDateTime);
+    private HyperdriveModule createModule(String id, CruiseDateTime activationDateTime,
+                                          CruiseDateTime deactivationDateTime) {
+        return new HyperdriveModule(new HyperdriveModuleId(id), ANY_POWER_LEVEL, activationDateTime,
+                                    deactivationDateTime);
     }
 }

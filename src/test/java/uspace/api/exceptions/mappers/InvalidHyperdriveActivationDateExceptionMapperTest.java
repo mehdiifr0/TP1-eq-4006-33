@@ -8,7 +8,8 @@ import uspace.domain.cruise.hyperdrive.exceptions.InvalidHyperdriveActivationDat
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InvalidHyperdriveActivationDateExceptionMapperTest {
-    private final InvalidHyperdriveActivationDateExceptionMapper mapper = new InvalidHyperdriveActivationDateExceptionMapper();
+    private final InvalidHyperdriveActivationDateExceptionMapper mapper =
+            new InvalidHyperdriveActivationDateExceptionMapper();
 
     @Test
     void whenToResponse_thenReturnBadRequest() {

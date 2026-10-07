@@ -19,10 +19,12 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class HyperdriveInventoryTest {
     private static final HyperdriveModuleId MODULE_ID = new HyperdriveModuleId("HY-77-V");
+
     private static final HyperdriveModuleId OTHER_MODULE_ID = new HyperdriveModuleId("HY-78-W");
 
     @Mock
     private HyperdriveModule hyperdriveModuleMock;
+
     @Mock
     private HyperdriveModule newHyperdriveModuleMock;
 

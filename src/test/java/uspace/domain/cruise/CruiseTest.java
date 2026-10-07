@@ -33,23 +33,38 @@ import static org.mockito.Mockito.verifyNoInteractions;
 @ExtendWith(MockitoExtension.class)
 class CruiseTest {
     private static final CruiseId CRUISE_ID = new CruiseId("JUPITER_MOON_EXPLORATION_2085");
+
     private static final CruiseDateTime DEPARTURE_DATE_TIME = new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 12, 0));
+
     private static final CruiseDateTime END_DATE_TIME = new CruiseDateTime(LocalDateTime.of(2085, 2, 1, 12, 0));
-    private static final CruiseDateTime DATE_TIME_BEFORE_DEPARTURE = new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 11, 59));
-    private static final CruiseDateTime DATE_TIME_AFTER_DEPARTURE = new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 12, 1));
+
+    private static final CruiseDateTime DATE_TIME_BEFORE_DEPARTURE =
+            new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 11, 59));
+
+    private static final CruiseDateTime DATE_TIME_AFTER_DEPARTURE =
+            new CruiseDateTime(LocalDateTime.of(2085, 1, 25, 12, 1));
+
     private static final BookingId BOOKING_ID = new BookingId("booking-id");
+
     private static final TravelerId TRAVELER_ID = new TravelerId("traveler-id");
+
     private static final HyperdriveModuleId HYPERDRIVE_MODULE_ID = new HyperdriveModuleId("HY-77-V");
+
     @Mock
     private HyperdriveInventory hyperdriveInventoryMock;
+
     @Mock
     private CabinAvailabilities cabinAvailabilitiesMock;
+
     @Mock
     private Bookings bookingsMock;
+
     @Mock
     private ZeroGravityExperience zeroGravityExperienceMock;
+
     @Mock
     private HyperdriveModule hyperdriveModuleMock;
+
     @Mock
     private Booking bookingMock;
 
@@ -77,13 +92,13 @@ class CruiseTest {
     }
 
     @Test
-    void givenExperienceBookingDateTimeAfterDeparture_whenBookZeroGravityExperience_thenThrowZeroGravityExperienceBookingTimeException() {
+    void givenDateAfterDeparture_whenBookZeroGravityExperience_thenThrowZeroGravityExperienceBookingTimeException() {
         assertThrows(ZeroGravityExperienceBookingTimeException.class,
                 () -> cruise.bookZeroGravityExperience(BOOKING_ID, TRAVELER_ID, DATE_TIME_AFTER_DEPARTURE));
     }
 
     @Test
-    void givenExperienceBookingDateTimeAfterDeparture_whenBookZeroGravityExperience_thenDoNotLookForBooking() {
+    void givenDateAfterDeparture_whenBookZeroGravityExperience_thenDoNotLookForBooking() {
         assertThrows(ZeroGravityExperienceBookingTimeException.class,
                 () -> cruise.bookZeroGravityExperience(BOOKING_ID, TRAVELER_ID, DATE_TIME_AFTER_DEPARTURE));
 
@@ -99,7 +114,7 @@ class CruiseTest {
     }
 
     @Test
-    void givenExistingBookingAndDateTimeBeforeDeparture_whenBookZeroGravityExperience_thenBookingBooksCruiseExperienceForTraveler() {
+    void givenExistingBookingAndDateTimeBeforeDeparture_whenBookZeroGravityExperience_thenBookingBooksExperience() {
         when(bookingsMock.findById(BOOKING_ID)).thenReturn(bookingMock);
 
         cruise.bookZeroGravityExperience(BOOKING_ID, TRAVELER_ID, DATE_TIME_BEFORE_DEPARTURE);
@@ -108,7 +123,7 @@ class CruiseTest {
     }
 
     @Test
-    void givenExistingBookingAndDateTimeEqualToDeparture_whenBookZeroGravityExperience_thenBookingBooksCruiseExperienceForTraveler() {
+    void givenExistingBookingAndDateTimeEqualToDeparture_whenBookZeroGravityExperience_thenBookingBooksExperience() {
         when(bookingsMock.findById(BOOKING_ID)).thenReturn(bookingMock);
 
         cruise.bookZeroGravityExperience(BOOKING_ID, TRAVELER_ID, DEPARTURE_DATE_TIME);
@@ -121,7 +136,8 @@ class CruiseTest {
         when(hyperdriveModuleMock.getId()).thenReturn(HYPERDRIVE_MODULE_ID);
         when(hyperdriveInventoryMock.contains(HYPERDRIVE_MODULE_ID)).thenReturn(true);
 
-        assertThrows(HyperdriveModuleAlreadyExistsException.class, () -> cruise.addHyperdriveModule(hyperdriveModuleMock));
+        assertThrows(HyperdriveModuleAlreadyExistsException.class,
+                () -> cruise.addHyperdriveModule(hyperdriveModuleMock));
     }
 
     @Test
@@ -129,7 +145,8 @@ class CruiseTest {
         givenNewModule();
         when(hyperdriveModuleMock.isActiveBetween(DEPARTURE_DATE_TIME, END_DATE_TIME)).thenReturn(false);
 
-        assertThrows(InvalidHyperdriveActivationDateException.class, () -> cruise.addHyperdriveModule(hyperdriveModuleMock));
+        assertThrows(InvalidHyperdriveActivationDateException.class,
+                () -> cruise.addHyperdriveModule(hyperdriveModuleMock));
     }
 
     @Test

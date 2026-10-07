@@ -2,8 +2,11 @@ package uspace.application.cruise.hyperdrive.dtos.newHyperdriveModule;
 
 public class NewHyperdriveModuleDto {
     public String id;
+
     public int powerLevel;
+
     public int activationDays;
+
     public String activationDate;
 
     public NewHyperdriveModuleDto() {

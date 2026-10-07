@@ -31,21 +31,30 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class BookingServiceTest {
     private static final String CRUISE_ID = "JUPITER_MOONS_EXPLORATION_2085";
+
     private static final String BOOKING_ID = "booking-id";
+
     private static final String TRAVELER_ID = "traveler-id";
+
     private static final String EXPERIENCE_BOOKING_DATE_TIME_STR = "2084-04-08T12:30:00";
+
     private static final LocalDateTime EXPERIENCE_BOOKING_DATE_TIME = LocalDateTime.of(2084, 4, 8, 12, 30);
+
     private static final NewZeroGravityExperienceBookingDto NEW_ZERO_GRAVITY_EXPERIENCE_BOOKING_DTO =
             new NewZeroGravityExperienceBookingDto(EXPERIENCE_BOOKING_DATE_TIME_STR);
 
     @Mock
     private CruiseRepository cruiseRepositoryMock;
+
     @Mock
     private BookingFactory bookingFactoryMock;
+
     @Mock
     private BookingAssembler bookingAssemblerMock;
+
     @Mock
     private LocalDateTimeParser localDateTimeParserMock;
+
     @Mock
     private Cruise cruiseMock;
 
@@ -53,7 +62,8 @@ class BookingServiceTest {
 
     @BeforeEach
     void setUp() {
-        bookingService = new BookingService(cruiseRepositoryMock, bookingFactoryMock, bookingAssemblerMock, localDateTimeParserMock);
+        bookingService = new BookingService(cruiseRepositoryMock, bookingFactoryMock, bookingAssemblerMock,
+                                            localDateTimeParserMock);
     }
 
     @Test
@@ -86,7 +96,8 @@ class BookingServiceTest {
     @Test
     void givenInvalidDateTimeFormat_whenBookZeroGravityExperience_thenDoNotBookExperience() {
         when(cruiseRepositoryMock.findById(new CruiseId(CRUISE_ID))).thenReturn(cruiseMock);
-        when(localDateTimeParserMock.parse(EXPERIENCE_BOOKING_DATE_TIME_STR)).thenThrow(new InvalidDateFormatException());
+        when(localDateTimeParserMock.parse(EXPERIENCE_BOOKING_DATE_TIME_STR))
+                .thenThrow(new InvalidDateFormatException());
 
         assertThrows(InvalidDateFormatException.class, this::bookZeroGravityExperience);
 
@@ -96,7 +107,8 @@ class BookingServiceTest {
     @Test
     void givenCruiseRefusesBooking_whenBookZeroGravityExperience_thenDoNotSaveCruise() {
         givenExistingCruiseAndValidDateTime();
-        doThrow(new ZeroGravityExperienceFullException()).when(cruiseMock).bookZeroGravityExperience(any(), any(), any());
+        doThrow(new ZeroGravityExperienceFullException())
+                .when(cruiseMock).bookZeroGravityExperience(any(), any(), any());
 
         assertThrows(ZeroGravityExperienceFullException.class, this::bookZeroGravityExperience);
 
@@ -109,6 +121,7 @@ class BookingServiceTest {
     }
 
     private void bookZeroGravityExperience() {
-        bookingService.bookZeroGravityExperience(CRUISE_ID, BOOKING_ID, TRAVELER_ID, NEW_ZERO_GRAVITY_EXPERIENCE_BOOKING_DTO);
+        bookingService.bookZeroGravityExperience(CRUISE_ID, BOOKING_ID, TRAVELER_ID,
+                                                 NEW_ZERO_GRAVITY_EXPERIENCE_BOOKING_DTO);
     }
 }

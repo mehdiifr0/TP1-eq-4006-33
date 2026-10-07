@@ -8,7 +8,8 @@ import uspace.domain.cruise.zeroGravityExperience.exceptions.ZeroGravityExperien
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ZeroGravityExperienceBookingTimeExceptionMapperTest {
-    private final ZeroGravityExperienceBookingTimeExceptionMapper mapper = new ZeroGravityExperienceBookingTimeExceptionMapper();
+    private final ZeroGravityExperienceBookingTimeExceptionMapper mapper =
+            new ZeroGravityExperienceBookingTimeExceptionMapper();
 
     @Test
     void whenToResponse_thenReturnBadRequest() {
@@ -23,6 +24,7 @@ class ZeroGravityExperienceBookingTimeExceptionMapperTest {
 
         ErrorResponse errorResponse = (ErrorResponse) response.getEntity();
         assertEquals("ZERO_GRAVITY_EXPERIENCE_BOOKING_TIME", errorResponse.error);
-        assertEquals("Zero gravity experience booking time must be before the cruise departure time.", errorResponse.description);
+        assertEquals("Zero gravity experience booking time must be before the cruise departure time.",
+                     errorResponse.description);
     }
 }

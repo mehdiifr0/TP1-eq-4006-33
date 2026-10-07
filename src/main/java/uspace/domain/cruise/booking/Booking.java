@@ -13,8 +13,11 @@ import java.util.List;
 
 public class Booking {
     private final BookingId id;
+
     private final List<Traveler> travelers;
+
     private final CabinType cabinType;
+
     private final CruiseDateTime bookingDateTime;
 
     public Booking(BookingId id, List<Traveler> travelers, CabinType cabinType, CruiseDateTime bookingDateTime) {

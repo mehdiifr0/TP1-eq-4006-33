@@ -23,13 +23,16 @@ import java.time.LocalDateTime;
 public class BookingService {
 
     private final CruiseRepository cruiseRepository;
+
     private final BookingFactory bookingFactory;
+
     private final BookingAssembler bookingAssembler;
+
     private final LocalDateTimeParser localDateTimeParser;
 
     @Inject
-    public BookingService(CruiseRepository cruiseRepository, BookingFactory bookingFactory, BookingAssembler bookingAssembler,
-                          LocalDateTimeParser localDateTimeParser) {
+    public BookingService(CruiseRepository cruiseRepository, BookingFactory bookingFactory,
+                          BookingAssembler bookingAssembler, LocalDateTimeParser localDateTimeParser) {
         this.cruiseRepository = cruiseRepository;
         this.bookingFactory = bookingFactory;
         this.bookingAssembler = bookingAssembler;
@@ -66,7 +69,8 @@ public class BookingService {
                                           NewZeroGravityExperienceBookingDto newZeroGravityExperienceBookingDto) {
         Cruise cruise = findCruiseById(cruiseId);
 
-        LocalDateTime experienceBookingDateTime = localDateTimeParser.parse(newZeroGravityExperienceBookingDto.experienceBookingDateTime);
+        LocalDateTime experienceBookingDateTime =
+                localDateTimeParser.parse(newZeroGravityExperienceBookingDto.experienceBookingDateTime);
         cruise.bookZeroGravityExperience(new BookingId(bookingId),
                                          new TravelerId(travelerId),
                                          new CruiseDateTime(experienceBookingDateTime));

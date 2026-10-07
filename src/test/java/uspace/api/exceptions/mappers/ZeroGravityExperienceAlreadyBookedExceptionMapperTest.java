@@ -8,7 +8,8 @@ import uspace.domain.cruise.zeroGravityExperience.exceptions.ZeroGravityExperien
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ZeroGravityExperienceAlreadyBookedExceptionMapperTest {
-    private final ZeroGravityExperienceAlreadyBookedExceptionMapper mapper = new ZeroGravityExperienceAlreadyBookedExceptionMapper();
+    private final ZeroGravityExperienceAlreadyBookedExceptionMapper mapper =
+            new ZeroGravityExperienceAlreadyBookedExceptionMapper();
 
     @Test
     void whenToResponse_thenReturnBadRequest() {

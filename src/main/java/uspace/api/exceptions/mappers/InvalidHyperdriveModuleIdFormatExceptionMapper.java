@@ -7,7 +7,8 @@ import uspace.api.exceptions.ErrorResponse;
 import uspace.domain.cruise.hyperdrive.exceptions.InvalidHyperdriveModuleIdFormatException;
 
 @Provider
-public class InvalidHyperdriveModuleIdFormatExceptionMapper implements ExceptionMapper<InvalidHyperdriveModuleIdFormatException> {
+public class InvalidHyperdriveModuleIdFormatExceptionMapper
+        implements ExceptionMapper<InvalidHyperdriveModuleIdFormatException> {
 
     @Override
     public Response toResponse(InvalidHyperdriveModuleIdFormatException exception) {

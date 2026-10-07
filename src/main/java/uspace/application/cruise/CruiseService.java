@@ -19,9 +19,13 @@ import java.time.LocalDate;
 public class CruiseService {
 
     private final CruiseRepository cruiseRepository;
+
     private final CruiseAssembler cruiseAssembler;
+
     private final HyperdriveModuleFactory hyperdriveModuleFactory;
+
     private final HyperdriveStabilityValidator hyperdriveStabilityValidator;
+
     private final LocalDateParser localDateParser;
 
     @Inject
