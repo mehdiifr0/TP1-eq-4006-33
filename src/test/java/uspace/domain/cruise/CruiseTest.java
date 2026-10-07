@@ -60,21 +60,6 @@ class CruiseTest {
                 hyperdriveInventoryMock);
     }
 
-    ///ATTENTION! Ce test sert à vous montrer la configuration avec Junit et Mockito.
-    // Il ne respecte peut-être pas les bonnes pratiques vues en classe.
-    /*@Test
-    void testGetHyperdriveModulesInItinerary() {
-        when(hyperdriveInventoryMock.getAllHyperdriveModules()).thenReturn(List.of(hyperdriveModuleMock));
-        Cruise cruise = new Cruise(new CruiseId("AnId"),
-                                   new CruiseDateTime(LocalDateTime.now()),
-                                   new CruiseDateTime(LocalDateTime.now()),
-                                   cabinAvailabilitiesMock,
-                                   bookingsMock,
-                                   zeroGravityExperienceMock,
-                                   hyperdriveInventoryMock);
-        assertEquals(hyperdriveModuleMock, cruise.getHyperdriveModules().get(0));
-    }*/
-
     @Test
     void givenModulesInInventory_whenGetHyperdriveModules_thenReturnInventoryModules() {
         List<HyperdriveModule> inventoryModules = List.of(hyperdriveModuleMock);
