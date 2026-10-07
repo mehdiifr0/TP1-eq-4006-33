@@ -5,17 +5,14 @@ import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 
 import java.util.List;
 
-public class Traveler {
+public abstract class Traveler {
     private final TravelerId id;
     private final TravelerName name;
-    private final TravelerCategory category;
     private final List<Badge> badges;
 
-    public Traveler(TravelerId id, TravelerName name, TravelerCategory category, List<Badge> badges)
-    {
+    public Traveler(TravelerId id, TravelerName name, List<Badge> badges) {
         this.id = id;
         this.name = name;
-        this.category = category;
         this.badges = badges;
     }
 
@@ -27,23 +24,22 @@ public class Traveler {
         return name;
     }
 
-    public TravelerCategory getCategory() {
-        return category;
-    }
-
     public List<Badge> getBadges() {
         return badges;
     }
 
-    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience)
-    {
-        zeroGravityExperience.book(id);
-        earnBadge(Badge.ZERO_G);
+    public abstract TravelerCategory getCategory();
+
+    public abstract boolean canAccompanyChild();
+
+    public abstract void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience, List<Traveler> bookingTravelers);
+
+    public boolean hasBooked(ZeroGravityExperience zeroGravityExperience) {
+        return zeroGravityExperience.hasTravelerBooked(id);
     }
 
-    private void earnBadge(Badge badge) {
-        if (!badges.contains(badge))
-        {
+    protected void earnBadge(Badge badge) {
+        if (!badges.contains(badge)) {
             badges.add(badge);
         }
     }

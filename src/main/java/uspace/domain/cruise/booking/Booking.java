@@ -60,7 +60,7 @@ public class Booking {
             throw new TravelerNotFoundException();
         }
 
-        traveler.bookZeroGravityExperience(zeroGravityExperience);
+        traveler.bookZeroGravityExperience(zeroGravityExperience, travelers);
     }
 
     private boolean bookingDateIsBeforeCruiseDeparture(CruiseDateTime cruiseDepartureDateTime) {
